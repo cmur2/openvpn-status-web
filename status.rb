@@ -67,4 +67,4 @@ class OpenVPNStatusWeb
   end
 end
 
-Rack::Handler::Mongrel.run OpenVPNStatusWeb.new('', ''), :Port => 9292
+Rack::Handler::Mongrel.run OpenVPNStatusWeb.new(ARGV[0], ARGV[1]), :Host => ARGV[2], :Port => ARGV[3]
