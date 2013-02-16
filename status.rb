@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 
 require 'erb'
 
@@ -27,7 +28,7 @@ class OpenVPNStatusWeb
   end
   
   def call(env)
-    main_tmpl = read_template('main.html.erb')
+    main_tmpl = read_template(File.join(File.dirname(__FILE__), 'main.html.erb'))
     # variables for template
     name = @name
     client_list, routing_table, global_stats = read_status_log(@file)
