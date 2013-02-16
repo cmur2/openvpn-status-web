@@ -21,7 +21,7 @@ STATUS_PATH="/var/log/openvpn-status.log"
 HOST="127.0.0.1"
 PORT="3000"
 
-DAEMON_OPTS="/root/dev/openvpn-status-web/status.rb $VPN_NAME $STATUS_PATH $HOST $PORT"
+DAEMON_OPTS="/opt/openvpn-status-web/status.rb $VPN_NAME $STATUS_PATH $HOST $PORT"
 
 test -x $DAEMON || exit 0
 
