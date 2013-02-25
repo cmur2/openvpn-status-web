@@ -12,3 +12,7 @@ It lacks:
 * management interface support
 * a gem
 * *possibly more...*
+
+## License
+
+openvpn-statsu-web is licensed under the Apache License, Version 2.0. See LICENSE for more information.
