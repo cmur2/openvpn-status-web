@@ -68,4 +68,8 @@ class OpenVPNStatusWeb
   end
 end
 
-Rack::Handler::Mongrel.run OpenVPNStatusWeb.new(ARGV[0], ARGV[1]), :Host => ARGV[2], :Port => ARGV[3]
+if ARGV.length != 4
+  puts "Usage: status.rb vpn-name status-log listen-host listen-port"
+else
+  Rack::Handler::Mongrel.run OpenVPNStatusWeb.new(ARGV[0], ARGV[1]), :Host => ARGV[2], :Port => ARGV[3]
+end
