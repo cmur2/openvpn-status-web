@@ -34,7 +34,7 @@ class OpenVPNStatusWeb
     client_list, routing_table, global_stats = read_status_log(@file)
     
     html = main_tmpl.result(binding)
-    [200, {"Content-Type" => "text/html"}, html]
+    [200, {"Content-Type" => "text/html"}, [html]]
   end
 
   def read_template(file)
