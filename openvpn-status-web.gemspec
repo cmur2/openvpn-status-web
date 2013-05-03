@@ -21,7 +21,6 @@ Gem::Specification.new do |s|
   s.executables = ['openvpn-status-web']
 
   s.add_runtime_dependency 'rack'
-  s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'metriks'
 
   s.add_development_dependency 'bundler', '~> 1.3'
