@@ -12,6 +12,7 @@ require 'better_errors'
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
 require 'openvpn-status-web/parser/v2'
+require 'openvpn-status-web/parser/v3'
 require 'openvpn-status-web/int_patch'
 require 'openvpn-status-web/version'
 
@@ -64,6 +65,8 @@ module OpenVPNStatusWeb
         OpenVPNStatusWeb::Parser::V1.new.parse_status_log(text)
       when 2
         OpenVPNStatusWeb::Parser::V2.new.parse_status_log(text)
+      when 3
+        OpenVPNStatusWeb::Parser::V3.new.parse_status_log(text)
       else
         raise "No suitable parser for status-version #{vpn['version']}"
       end
