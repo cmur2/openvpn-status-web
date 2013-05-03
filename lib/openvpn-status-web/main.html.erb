@@ -63,7 +63,7 @@ thead {
         <td class="middle"><%= client[1] %></td>
         <td class="middle"><%= client[2].to_i.as_bytes %></td>
         <td class="middle"><%= client[3].to_i.as_bytes %></td>
-        <td class="last"><%= client[4] %></td>
+        <td class="last"><%= client[4].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
       </tr>
 <% end %>
     </tbody>
@@ -80,12 +80,12 @@ thead {
       <td class="last">Last Ref</td>
     </thead>
     <tbody>
-<% status.routing_table.each do |e| %>
+<% status.routing_table.each do |route| %>
       <tr>
-        <td class="first"><%= e[0] %></td>
-        <td class="middle"><%= e[1] %></td>
-        <td class="middle"><%= e[2] %></td>
-        <td class="last"><%= e[3] %></td>
+        <td class="first"><%= route[0] %></td>
+        <td class="middle"><%= route[1] %></td>
+        <td class="middle"><%= route[2] %></td>
+        <td class="last"><%= route[3].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
       </tr>
 <% end %>
     </tbody>
@@ -96,10 +96,10 @@ thead {
   <div>
   <table>
     <tbody>
-<% status.global_stats.each do |e| %>
+<% status.global_stats.each do |global| %>
       <tr>
-        <td><%= e[0] %>:</td>
-        <td><%= e[1] %></td>
+        <td><%= global[0] %>:</td>
+        <td><%= global[1] %></td>
       </tr>
 <% end %>
     </tbody>
