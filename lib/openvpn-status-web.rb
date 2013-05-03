@@ -43,8 +43,11 @@ module OpenVPNStatusWeb
       return [404, {"Content-Type" => "text/plain"}, ["Not Found"]] if env["PATH_INFO"] != "/"
 
       # variables for template
-      name = @vpns.keys.first
-      status = parse_status_log(@vpns[name])
+      vpns = @vpns
+      stati = {}
+      @vpns.each do |name,config|
+        stati[name] = parse_status_log(config)
+      end
       # eval
       html = @main_tmpl.result(binding)
 

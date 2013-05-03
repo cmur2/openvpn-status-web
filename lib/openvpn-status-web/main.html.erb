@@ -42,67 +42,70 @@ thead {
 </head>
 <body>
 
-<h1>OpenVPN Status for <%= name %></h1>
+<% vpns.each do |name,config| %>
+  <% status = stati[name] %>
+  <h1>OpenVPN Status for <%= name %></h1>
 
-<h2>Client List</h2>
-<div>
-<table>
-  <thead>
-    <td class="first">Common Name</td>
-    <td class="middle">Real Address</td>
-    <td class="middle">Data Received</td>
-    <td class="middle">Data Sent</td>
-    <td class="last">Connected Since</td>
-  </thead>
-  <tbody>
+  <h2>Client List</h2>
+  <div>
+  <table>
+    <thead>
+      <td class="first">Common Name</td>
+      <td class="middle">Real Address</td>
+      <td class="middle">Data Received</td>
+      <td class="middle">Data Sent</td>
+      <td class="last">Connected Since</td>
+    </thead>
+    <tbody>
 <% status.client_list.each do |client| %>
-    <tr>
-      <td class="first"><%= client[0] %></td>
-      <td class="middle"><%= client[1] %></td>
-      <td class="middle"><%= client[2].to_i.as_bytes %></td>
-      <td class="middle"><%= client[3].to_i.as_bytes %></td>
-      <td class="last"><%= client[4] %></td>
-    </tr>
+      <tr>
+        <td class="first"><%= client[0] %></td>
+        <td class="middle"><%= client[1] %></td>
+        <td class="middle"><%= client[2].to_i.as_bytes %></td>
+        <td class="middle"><%= client[3].to_i.as_bytes %></td>
+        <td class="last"><%= client[4] %></td>
+      </tr>
 <% end %>
-  </tbody>
-</table>
-</div>
+    </tbody>
+  </table>
+  </div>
 
-<h2>Routing Table</h2>
-<div>
-<table>
-  <thead>
-    <td class="first">Virtual Address</td>
-    <td class="middle">Common Name</td>
-    <td class="middle">Real Address</td>
-    <td class="last">Last Ref</td>
-  </thead>
-  <tbody>
+  <h2>Routing Table</h2>
+  <div>
+  <table>
+    <thead>
+      <td class="first">Virtual Address</td>
+      <td class="middle">Common Name</td>
+      <td class="middle">Real Address</td>
+      <td class="last">Last Ref</td>
+    </thead>
+    <tbody>
 <% status.routing_table.each do |e| %>
-    <tr>
-      <td class="first"><%= e[0] %></td>
-      <td class="middle"><%= e[1] %></td>
-      <td class="middle"><%= e[2] %></td>
-      <td class="last"><%= e[3] %></td>
-    </tr>
+      <tr>
+        <td class="first"><%= e[0] %></td>
+        <td class="middle"><%= e[1] %></td>
+        <td class="middle"><%= e[2] %></td>
+        <td class="last"><%= e[3] %></td>
+      </tr>
 <% end %>
-  </tbody>
-</table>
-</div>
+    </tbody>
+  </table>
+  </div>
 
-<h2>Global Stats</h2>
-<div>
-<table>
-  <tbody>
+  <h2>Global Stats</h2>
+  <div>
+  <table>
+    <tbody>
 <% status.global_stats.each do |e| %>
-    <tr>
-      <td><%= e[0] %>:</td>
-      <td><%= e[1] %></td>
-    </tr>
+      <tr>
+        <td><%= e[0] %>:</td>
+        <td><%= e[1] %></td>
+      </tr>
 <% end %>
-  </tbody>
-</table>
-</div>
+    </tbody>
+  </table>
+  </div>
+<% end %>
 
 </body>
 </html>
