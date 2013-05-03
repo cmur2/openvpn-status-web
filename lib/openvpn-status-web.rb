@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'date'
 require 'etc'
 require 'logger'
 require 'ipaddr'
