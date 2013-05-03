@@ -11,6 +11,7 @@ require 'better_errors'
 
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
+require 'openvpn-status-web/parser/v2'
 require 'openvpn-status-web/int_patch'
 require 'openvpn-status-web/version'
 
@@ -42,10 +43,9 @@ module OpenVPNStatusWeb
 
       # variables for template
       name = @vpns.keys.first
-      status = read_status_log(@vpns[name]['status_file'])
+      status = parse_status_log(@vpns[name])
       # eval
       html = @main_tmpl.result(binding)
-      #html = ""
 
       [200, {"Content-Type" => "text/html"}, [html]]
     end
@@ -56,10 +56,17 @@ module OpenVPNStatusWeb
       ERB.new(text)
     end
   
-    def read_status_log(file)
-      text = File.open(file, 'rb') do |f| f.read end
+    def parse_status_log(vpn)
+      text = File.open(vpn['status_file'], 'rb') do |f| f.read end
 
-      OpenVPNStatusWeb::Parser::V1.new.parse_status_log(text)
+      case vpn['version']
+      when 1
+        OpenVPNStatusWeb::Parser::V1.new.parse_status_log(text)
+      when 2
+        OpenVPNStatusWeb::Parser::V2.new.parse_status_log(text)
+      else
+        raise "No suitable parser for status-version #{vpn['version']}"
+      end
     end
 
     def self.run!
