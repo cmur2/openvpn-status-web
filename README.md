@@ -4,10 +4,10 @@ Small (another word for naive in this case, it's simple and serves my needs) [Ra
 
 It lacks:
 
-* caching (parses file on each request, page does auto-refresh every minute as OpenVPN updates the status file these often)
-* newer status file versions than v1
-* management interface support
 * tracking multiple status at the same time
+* newer status file versions than v1
+* caching (parses file on each request, page does auto-refresh every minute as OpenVPN updates the status file these often by default)
+* management interface support
 * *possibly more...*
 
 ## Usage
@@ -29,9 +29,20 @@ name: "My Small VPN"
 status_file: "/var/log/openvpn-status.log"
 ```
 
+Your OpenVPN configuration should contain something like this:
+
+```
+# ...snip...
+status /var/log/openvpn-status.log
+status-version 1
+# ...snip...
+```
+
 ## Advanced topics
 
-## Authentication
+### Authentication
+
+If the information exposed is important to you serve it via the VPN or use a webserver as a proxy to handle SSL and/or HTTP authentication.
 
 ### Init scripts
 
