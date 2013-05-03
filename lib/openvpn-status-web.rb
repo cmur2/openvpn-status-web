@@ -5,6 +5,7 @@ require 'logger'
 require 'ipaddr'
 require 'yaml'
 require 'rack'
+require 'erb'
 require 'metriks'
 
 require 'openvpn-status-web/status'
@@ -28,18 +29,23 @@ module OpenVPNStatusWeb
   end
 
   class Daemon
-    def initialize(name, file)
-      @name = name
-      @file = file
+    def initialize(vpns)
+      @vpns = vpns
+
+      @main_tmpl = read_template(File.join(File.dirname(__FILE__), 'openvpn-status-web/main.html.erb'))
     end
 
     def call(env)
-      main_tmpl = read_template(File.join(File.dirname(__FILE__), 'openvpn-status-web/main.html.erb'))
+      return [405, {"Content-Type" => "text/plain"}, ["Method Not Allowed"]] if env["REQUEST_METHOD"] != "GET"
+      return [404, {"Content-Type" => "text/plain"}, ["Not Found"]] if env["PATH_INFO"] != "/"
+
       # variables for template
-      name = @name
-      status = read_status_log(@file)
-      
-      html = main_tmpl.result(binding)
+      #name = @vpns.keys.first
+      #status = read_status_log(@vpns[name]['status_file'])
+      # eval
+      #html = @main_tmpl.result(binding)
+      html = ""
+
       [200, {"Content-Type" => "text/html"}, [html]]
     end
 
@@ -72,7 +78,7 @@ module OpenVPNStatusWeb
       puts "Using config file #{config_file}"
 
       config = YAML::load(File.open(config_file, 'r') { |f| f.read })
-      
+
       if config['logfile']
         OpenVPNStatusWeb.logger = Logger.new(config['logfile'])
       else
@@ -84,7 +90,7 @@ module OpenVPNStatusWeb
 
       OpenVPNStatusWeb.logger.info "Starting..."
 
-      app = Daemon.new(config['name'], config['status_file'])
+      app = Daemon.new(config['vpns'])
 
       Signal.trap('INT') do
         OpenVPNStatusWeb.logger.info "Quitting..."
