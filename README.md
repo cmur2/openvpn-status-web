@@ -1,5 +1,9 @@
 # openvpn-status-web
 
+[![Build Status](https://travis-ci.org/cmur2/openvpn-status-web.png)](https://travis-ci.org/cmur2/openvpn-status-web)
+
+## Description
+
 Small (another word for naive in this case, it's simple and serves my needs) [Rack](http://rack.github.com/) application providing the information the [OpenVPN](http://openvpn.net/index.php/open-source.html) server collects in it's status file especially including a list of currently connected clients (common name, remote address, traffic, ...).
 
 It lacks:
