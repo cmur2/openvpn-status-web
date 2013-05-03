@@ -7,6 +7,7 @@ require 'yaml'
 require 'rack'
 require 'erb'
 require 'metriks'
+require 'better_errors'
 
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
@@ -40,11 +41,11 @@ module OpenVPNStatusWeb
       return [404, {"Content-Type" => "text/plain"}, ["Not Found"]] if env["PATH_INFO"] != "/"
 
       # variables for template
-      #name = @vpns.keys.first
-      #status = read_status_log(@vpns[name]['status_file'])
+      name = @vpns.keys.first
+      status = read_status_log(@vpns[name]['status_file'])
       # eval
-      #html = @main_tmpl.result(binding)
-      html = ""
+      html = @main_tmpl.result(binding)
+      #html = ""
 
       [200, {"Content-Type" => "text/html"}, [html]]
     end
@@ -90,7 +91,12 @@ module OpenVPNStatusWeb
 
       OpenVPNStatusWeb.logger.info "Starting..."
 
+      # configure rack
       app = Daemon.new(config['vpns'])
+      if ENV['RACK_ENV'] == "development"
+        app = BetterErrors::Middleware.new(app)
+        BetterErrors.application_root = File.expand_path("..", __FILE__)
+      end
 
       Signal.trap('INT') do
         OpenVPNStatusWeb.logger.info "Quitting..."
