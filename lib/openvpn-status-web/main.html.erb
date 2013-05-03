@@ -55,7 +55,7 @@ thead {
     <td class="last">Connected Since</td>
   </thead>
   <tbody>
-<% client_list.each do |client| %>
+<% status.client_list.each do |client| %>
     <tr>
       <td class="first"><%= client[0] %></td>
       <td class="middle"><%= client[1] %></td>
@@ -78,7 +78,7 @@ thead {
     <td class="last">Last Ref</td>
   </thead>
   <tbody>
-<% routing_table.each do |e| %>
+<% status.routing_table.each do |e| %>
     <tr>
       <td class="first"><%= e[0] %></td>
       <td class="middle"><%= e[1] %></td>
@@ -94,7 +94,7 @@ thead {
 <div>
 <table>
   <tbody>
-<% global_stats.each do |e| %>
+<% status.global_stats.each do |e| %>
     <tr>
       <td><%= e[0] %>:</td>
       <td><%= e[1] %></td>

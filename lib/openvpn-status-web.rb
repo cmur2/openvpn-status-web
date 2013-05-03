@@ -7,9 +7,9 @@ require 'yaml'
 require 'rack'
 require 'metriks'
 
+require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
 require 'openvpn-status-web/int_patch'
-require 'openvpn-status-web/status'
 require 'openvpn-status-web/version'
 
 module OpenVPNStatusWeb
@@ -37,7 +37,7 @@ module OpenVPNStatusWeb
       main_tmpl = read_template(File.join(File.dirname(__FILE__), 'openvpn-status-web/main.html.erb'))
       # variables for template
       name = @name
-      client_list, routing_table, global_stats = read_status_log(@file)
+      status = read_status_log(@file)
       
       html = main_tmpl.result(binding)
       [200, {"Content-Type" => "text/html"}, [html]]

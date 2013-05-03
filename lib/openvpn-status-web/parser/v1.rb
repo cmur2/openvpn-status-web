@@ -21,7 +21,11 @@ module OpenVPNStatusWeb
           end
         end
 
-        [client_list[2..-1], routing_table[1..-1], global_stats]
+        status = Status.new
+        status.client_list = client_list[2..-1]
+        status.routing_table = routing_table[1..-1]
+        status.global_stats = global_stats
+        status
       end
     end
   end
