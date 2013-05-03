@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name  = 'openvpn-status-web'
   s.version = OpenVPNStatusWeb::VERSION
   s.summary = 'openvpn-status-web'
-  s.description = 'Small Rack application that parses and serves the OpenVPN status file.'
+  s.description = 'Small Rack (Ruby) application serving OpenVPN status file.'
   s.author  = 'Christian Nicolai'
   s.email = 'chrnicolai@gmail.com'
   s.license = 'Apache License Version 2.0'
