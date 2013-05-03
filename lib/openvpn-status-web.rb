@@ -72,25 +72,42 @@ module OpenVPNStatusWeb
     end
 
     def self.run!
-      if ARGV.length != 4
-        puts "Usage: openvpn-status-web vpn-name status-log listen-host listen-port"
+      if ARGV.length != 1
+        puts "Usage: openvpn-status-web config_file"
         exit 1
       end
 
-      OpenVPNStatusWeb.logger = Logger.new(STDOUT)
+      config_file = ARGV[0]
+
+      if not File.file?(config_file)
+        puts "Config file not found!"
+        exit 1
+      end
+      
+      puts "openvpn-status-web version #{OpenVPNStatusWeb::VERSION}"
+      puts "Using config file #{config_file}"
+
+      config = YAML::load(File.open(config_file, 'r') { |f| f.read })
+      
+      if config['logfile']
+        OpenVPNStatusWeb.logger = Logger.new(config['logfile'])
+      else
+        OpenVPNStatusWeb.logger = Logger.new(STDOUT)
+      end
 
       OpenVPNStatusWeb.logger.progname = "openvpn-status-web"
       OpenVPNStatusWeb.logger.formatter = LogFormatter.new
 
       OpenVPNStatusWeb.logger.info "Starting..."
 
+      app = Daemon.new(config['name'], config['status_file'])
+
       Signal.trap('INT') do
         OpenVPNStatusWeb.logger.info "Quitting..."
         Rack::Handler::WEBrick.shutdown
       end
-
-      app = Daemon.new(ARGV[0], ARGV[1])
-      Rack::Handler::WEBrick.run app, :Host => ARGV[2], :Port => ARGV[3]
+      
+      Rack::Handler::WEBrick.run app, :Host => config['host'], :Port => config['port']
     end
   end
 end
