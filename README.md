@@ -10,7 +10,6 @@ It lacks:
 * authentication
 * caching (parses file on each request, page does auto-refresh every minute as OpenVPN updates the status file these often)
 * management interface support
-* a gem
 * *possibly more...*
 
 ## License

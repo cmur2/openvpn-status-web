@@ -1,0 +1,4 @@
+
+require 'openvpn-status-web'
+
+OpenVPNStatusWeb::Daemon.run!
