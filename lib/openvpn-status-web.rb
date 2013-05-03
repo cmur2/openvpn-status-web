@@ -105,6 +105,10 @@ module OpenVPNStatusWeb
 
       OpenVPNStatusWeb.logger.info "Starting..."
 
+      # drop privs (first change group than user)
+      Process::Sys.setgid(Etc.getgrnam(config['group']).gid) if config['group']
+      Process::Sys.setuid(Etc.getpwnam(config['user']).uid) if config['user']
+
       # configure rack
       app = Daemon.new(config['vpns'])
       if ENV['RACK_ENV'] == "development"

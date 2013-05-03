@@ -26,6 +26,9 @@ Create a configuration file in YAML format somewhere:
 # listen address and port
 host: "0.0.0.0"
 port: "8080"
+# optional: drop priviliges in case you want to but you should give this user at least read access on the log files
+user: "nobody"
+group: "nogroup"
 # logfile is optional, logs to STDOUT else
 logfile: "openvpn-status-web.log"
 # display name for humans and the status file path
