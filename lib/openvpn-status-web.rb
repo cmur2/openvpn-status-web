@@ -8,7 +8,7 @@ require 'yaml'
 require 'rack'
 require 'erb'
 require 'metriks'
-require 'better_errors'
+require 'better_errors' if ENV['RACK_ENV'] == "development"
 
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
