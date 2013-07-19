@@ -4,12 +4,10 @@
 
 ## Description
 
-Small (another word for naive in this case, it's simple and serves my needs) [Rack](http://rack.github.com/) application providing the information the [OpenVPN](http://openvpn.net/index.php/open-source.html) server collects in it's status file especially including a list of currently connected clients (common name, remote address, traffic, ...).
+Small (another word for naive in this case, it's simple and serves my needs) [Rack](http://rack.github.com/) application providing the information an [OpenVPN](http://openvpn.net/index.php/open-source.html) server collects in it's status file especially including a list of currently connected clients (common name, remote address, traffic, ...).
 
 It lacks:
 
-* tracking multiple status at the same time
-* newer status file versions than v1
 * caching (parses file on each request, page does auto-refresh every minute as OpenVPN updates the status file these often by default)
 * management interface support
 * *possibly more...*
@@ -31,9 +29,15 @@ user: "nobody"
 group: "nogroup"
 # logfile is optional, logs to STDOUT else
 logfile: "openvpn-status-web.log"
-# display name for humans and the status file path
-name: "My Small VPN"
-status_file: "/var/log/openvpn-status.log"
+# hash with each VPNs display name for humans as key and further config as value
+vpns:
+  My Small VPN:
+    # the status file path and status file format version are required
+    version: 1
+    status_file: "/var/log/openvpn-status.log"
+  My Other VPN:
+    version: 3
+    status_file: "/var/log/other-openvpn-status.log"
 ```
 
 Your OpenVPN configuration should contain something like this:
@@ -44,6 +48,8 @@ status /var/log/openvpn-status.log
 status-version 1
 # ...snip...
 ```
+
+For more information about OpenVPN status file and version, see their [man page](https://community.openvpn.net/openvpn/wiki/Openvpn23ManPage). openvpn-status-web is able to parse all versions from 1 to 3.
 
 ## Advanced topics
 
