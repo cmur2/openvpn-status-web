@@ -120,6 +120,10 @@ module OpenVPNStatusWeb
         OpenVPNStatusWeb.logger.info "Quitting..."
         Rack::Handler::WEBrick.shutdown
       end
+      Signal.trap('TERM') do
+        OpenVPNStatusWeb.logger.info "Quitting..."
+        Rack::Handler::WEBrick.shutdown
+      end
       
       Rack::Handler::WEBrick.run app, :Host => config['host'], :Port => config['port']
     end
