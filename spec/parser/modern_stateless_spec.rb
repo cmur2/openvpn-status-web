@@ -8,47 +8,47 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
     context "for status-version #{version}" do
       context 'for client list' do
         it 'parses common names' do
-          status.client_list.map { |client| client[0] }.should be == ["foo", "bar"]
+          expect(status.client_list.map { |client| client[0] }).to eq(["foo", "bar"])
         end
 
         it 'parses real addresses' do
-          status.client_list.map { |client| client[1] }.should be == ["1.2.3.4:1234", "1.2.3.5:1235"]
+          expect(status.client_list.map { |client| client[1] }).to eq(["1.2.3.4:1234", "1.2.3.5:1235"])
         end
-        
+
         it 'parses received bytes' do
-          status.client_list.map { |client| client[2] }.should be == [11811160064, 512]
+          expect(status.client_list.map { |client| client[2] }).to eq([11811160064, 512])
         end
 
         it 'parses sent bytes' do
-          status.client_list.map { |client| client[3] }.should be == [4194304, 2048]
+          expect(status.client_list.map { |client| client[3] }).to eq([4194304, 2048])
         end
 
         it 'parses connected since date' do
-          status.client_list.map { |client| client[4] }.should be == [DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0)]
+          expect(status.client_list.map { |client| client[4] }).to eq([DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0)])
         end
       end
 
       context 'for routing table' do
         it 'parses virtual addresses' do
-          status.routing_table.map { |route| route[0] }.should be == ["192.168.0.0/24", "192.168.66.2", "192.168.66.3", "2001:db8:0:0::1000"]
+          expect(status.routing_table.map { |route| route[0] }).to eq(["192.168.0.0/24", "192.168.66.2", "192.168.66.3", "2001:db8:0:0::1000"])
         end
 
         it 'parses common names' do
-          status.routing_table.map { |route| route[1] }.should be == ["foo", "bar", "foo", "bar"]
+          expect(status.routing_table.map { |route| route[1] }).to eq(["foo", "bar", "foo", "bar"])
         end
 
         it 'parses real addresses' do
-          status.routing_table.map { |route| route[2] }.should be == ["1.2.3.4:1234", "1.2.3.5:1235", "1.2.3.4:1234", "1.2.3.5:1235"]
+          expect(status.routing_table.map { |route| route[2] }).to eq(["1.2.3.4:1234", "1.2.3.5:1235", "1.2.3.4:1234", "1.2.3.5:1235"])
         end
 
         it 'parses last ref date' do
-          status.routing_table.map { |route| route[3] }.should be == [DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0)]
+          expect(status.routing_table.map { |route| route[3] }).to eq([DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0), DateTime.new(2012,1,1,23,42,0)])
         end
       end
 
       it 'parses global stats' do
-        status.global_stats.size.should be == 1
-        status.global_stats.first.should be == ["Max bcast/mcast queue length", 42]
+        expect(status.global_stats.size).to eq(1)
+        expect(status.global_stats.first).to eq(["Max bcast/mcast queue length", 42])
       end
     end
   end
