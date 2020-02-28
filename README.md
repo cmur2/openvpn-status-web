@@ -1,6 +1,6 @@
 # openvpn-status-web
 
-[![Build Status](https://travis-ci.org/cmur2/openvpn-status-web.svg)](https://travis-ci.org/cmur2/openvpn-status-web)
+[![Build Status](https://travis-ci.org/cmur2/openvpn-status-web.svg)](https://travis-ci.org/cmur2/openvpn-status-web) [![Depfu](https://badges.depfu.com/badges/c264e2f70f2a19c43f880ddcb4a12ba8/overview.svg)](https://depfu.com/github/cmur2/openvpn-status-web?project_id=6194)
 
 ## Description
 
