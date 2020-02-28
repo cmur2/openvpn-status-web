@@ -1,6 +1,6 @@
 # openvpn-status-web
 
-[![Build Status](https://travis-ci.org/cmur2/openvpn-status-web.png)](https://travis-ci.org/cmur2/openvpn-status-web)
+[![Build Status](https://travis-ci.org/cmur2/openvpn-status-web.svg)](https://travis-ci.org/cmur2/openvpn-status-web)
 
 ## Description
 
