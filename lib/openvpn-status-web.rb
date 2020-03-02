@@ -8,7 +8,7 @@ require 'yaml'
 require 'rack'
 require 'erb'
 require 'metriks'
-require 'better_errors' if ENV['RACK_ENV'] == "development"
+require 'better_errors' if ENV['RACK_ENV'] == 'development'
 
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
@@ -27,8 +27,8 @@ module OpenVPNStatusWeb
   end
 
   class LogFormatter
-    def call(lvl, time, progname, msg)
-      "[%s] %-5s %s\n" % [Time.now.strftime('%Y-%m-%d %H:%M:%S'), lvl, msg.to_s]
+    def call(lvl, _time, _progname, msg)
+      format("[%s] %-5s %s\n", Time.now.strftime('%Y-%m-%d %H:%M:%S'), lvl, msg.to_s)
     end
   end
 
@@ -40,29 +40,29 @@ module OpenVPNStatusWeb
     end
 
     def call(env)
-      return [405, {"Content-Type" => "text/plain"}, ["Method Not Allowed"]] if env["REQUEST_METHOD"] != "GET"
-      return [404, {"Content-Type" => "text/plain"}, ["Not Found"]] if env["PATH_INFO"] != "/"
+      return [405, {'Content-Type' => 'text/plain'}, ['Method Not Allowed']] if env['REQUEST_METHOD'] != 'GET'
+      return [404, {'Content-Type' => 'text/plain'}, ['Not Found']] if env['PATH_INFO'] != '/'
 
       # variables for template
       vpns = @vpns
       stati = {}
-      @vpns.each do |name,config|
+      @vpns.each do |name, config|
         stati[name] = parse_status_log(config)
       end
       # eval
       html = @main_tmpl.result(binding)
 
-      [200, {"Content-Type" => "text/html"}, [html]]
+      [200, {'Content-Type' => 'text/html'}, [html]]
     end
 
     def read_template(file)
-      text = File.open(file, 'rb') do |f| f.read end
-    
+      text = File.open(file, 'rb', &:read)
+
       ERB.new(text)
     end
-  
+
     def parse_status_log(vpn)
-      text = File.open(vpn['status_file'], 'rb') do |f| f.read end
+      text = File.open(vpn['status_file'], 'rb', &:read)
 
       case vpn['version']
       when 1
@@ -78,21 +78,21 @@ module OpenVPNStatusWeb
 
     def self.run!
       if ARGV.length != 1
-        puts "Usage: openvpn-status-web config_file"
+        puts 'Usage: openvpn-status-web config_file'
         exit 1
       end
 
       config_file = ARGV[0]
 
-      if not File.file?(config_file)
-        puts "Config file not found!"
+      if !File.file?(config_file)
+        puts 'Config file not found!'
         exit 1
       end
-      
+
       puts "openvpn-status-web version #{OpenVPNStatusWeb::VERSION}"
       puts "Using config file #{config_file}"
 
-      config = YAML::load(File.open(config_file, 'r') { |f| f.read })
+      config = YAML.safe_load(File.open(config_file, 'r', &:read))
 
       if config['logfile']
         OpenVPNStatusWeb.logger = Logger.new(config['logfile'])
@@ -100,10 +100,10 @@ module OpenVPNStatusWeb
         OpenVPNStatusWeb.logger = Logger.new(STDOUT)
       end
 
-      OpenVPNStatusWeb.logger.progname = "openvpn-status-web"
+      OpenVPNStatusWeb.logger.progname = 'openvpn-status-web'
       OpenVPNStatusWeb.logger.formatter = LogFormatter.new
 
-      OpenVPNStatusWeb.logger.info "Starting..."
+      OpenVPNStatusWeb.logger.info 'Starting...'
 
       # drop privs (first change group than user)
       Process::Sys.setgid(Etc.getgrnam(config['group']).gid) if config['group']
@@ -111,21 +111,21 @@ module OpenVPNStatusWeb
 
       # configure rack
       app = Daemon.new(config['vpns'])
-      if ENV['RACK_ENV'] == "development"
+      if ENV['RACK_ENV'] == 'development'
         app = BetterErrors::Middleware.new(app)
-        BetterErrors.application_root = File.expand_path("..", __FILE__)
+        BetterErrors.application_root = File.expand_path(__dir__)
       end
 
       Signal.trap('INT') do
-        OpenVPNStatusWeb.logger.info "Quitting..."
+        OpenVPNStatusWeb.logger.info 'Quitting...'
         Rack::Handler::WEBrick.shutdown
       end
       Signal.trap('TERM') do
-        OpenVPNStatusWeb.logger.info "Quitting..."
+        OpenVPNStatusWeb.logger.info 'Quitting...'
         Rack::Handler::WEBrick.shutdown
       end
-      
-      Rack::Handler::WEBrick.run app, :Host => config['host'], :Port => config['port']
+
+      Rack::Handler::WEBrick.run app, Host: config['host'], Port: config['port']
     end
   end
 end

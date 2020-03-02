@@ -13,7 +13,7 @@ module OpenVPNStatusWeb
           (current_section = :rt; next) if line == "ROUTING TABLE\n"
           (current_section = :gs; next) if line == "GLOBAL STATS\n"
           (current_section = :end; next) if line == "END\n"
-      
+
           case current_section
           when :cl
             client_list << line.strip.split(',')
