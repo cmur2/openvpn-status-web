@@ -1,7 +1,5 @@
 
-$LOAD_PATH.push File.expand_path('lib', __dir__)
-
-require 'openvpn-status-web/version'
+require_relative 'lib/openvpn-status-web/version'
 
 Gem::Specification.new do |s|
   s.name = 'openvpn-status-web'
@@ -9,14 +7,21 @@ Gem::Specification.new do |s|
   s.summary = 'openvpn-status-web'
   s.description = 'Small Rack (Ruby) application serving OpenVPN status file.'
   s.author = 'Christian Nicolai'
-  s.email = 'chrnicolai@gmail.com'
+
   s.homepage = 'https://github.com/cmur2/openvpn-status-web'
   s.license = 'Apache-2.0'
+  s.metadata = {
+    'bug_tracker_uri' => "#{s.homepage}/issues",
+    'source_code_uri' => s.homepage
+  }
 
-  s.files = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
-  s.test_files = s.files.grep(%r{^(test|spec|features)/})
+  s.files = `git ls-files -z`.split("\x0").select do |f|
+    f.match(%r{^(init.d|lib)/})
+  end
   s.require_paths = ['lib']
+  s.bindir = 'exe'
   s.executables = ['openvpn-status-web']
+  s.extra_rdoc_files = Dir['README.md', 'LICENSE']
 
   s.required_ruby_version = '>= 2.3'
 
