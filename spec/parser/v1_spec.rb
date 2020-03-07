@@ -1,4 +1,5 @@
-require 'spec_helper'
+
+require_relative '../spec_helper'
 
 describe OpenVPNStatusWeb::Parser::V1 do
   def status

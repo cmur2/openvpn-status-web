@@ -18,15 +18,23 @@ require 'openvpn-status-web/int_patch'
 require 'openvpn-status-web/version'
 
 module OpenVPNStatusWeb
+  # @return [Logger]
   def self.logger
     @logger
   end
 
+  # @param logger [Logger]
+  # @return [Logger]
   def self.logger=(logger)
     @logger = logger
   end
 
   class LogFormatter
+    # @param lvl [Object]
+    # @param _time [DateTime]
+    # @param _progname [String]
+    # @param msg [Object]
+    # @return [String]
     def call(lvl, _time, _progname, msg)
       format("[%s] %-5s %s\n", Time.now.strftime('%Y-%m-%d %H:%M:%S'), lvl, msg.to_s)
     end
@@ -56,13 +64,13 @@ module OpenVPNStatusWeb
     end
 
     def read_template(file)
-      text = File.open(file, 'rb', &:read)
+      text = File.read(file, mode: 'rb')
 
       ERB.new(text)
     end
 
     def parse_status_log(vpn)
-      text = File.open(vpn['status_file'], 'rb', &:read)
+      text = File.read(vpn['status_file'], mode: 'rb')
 
       case vpn['version']
       when 1
@@ -76,6 +84,7 @@ module OpenVPNStatusWeb
       end
     end
 
+    # @return [void]
     def self.run!
       if ARGV.length != 1
         puts 'Usage: openvpn-status-web config_file'
@@ -92,7 +101,7 @@ module OpenVPNStatusWeb
       puts "openvpn-status-web version #{OpenVPNStatusWeb::VERSION}"
       puts "Using config file #{config_file}"
 
-      config = YAML.safe_load(File.open(config_file, 'r', &:read))
+      config = YAML.safe_load(File.read(config_file, mode: 'r'))
 
       if config['logfile']
         OpenVPNStatusWeb.logger = Logger.new(config['logfile'])
@@ -105,9 +114,16 @@ module OpenVPNStatusWeb
 
       OpenVPNStatusWeb.logger.info 'Starting...'
 
-      # drop privs (first change group than user)
-      Process::Sys.setgid(Etc.getgrnam(config['group']).gid) if config['group']
-      Process::Sys.setuid(Etc.getpwnam(config['user']).uid) if config['user']
+      # drop priviliges as soon as possible
+      # NOTE: first change group than user
+      if config['group']
+        group = Etc.getgrnam(config['group'])
+        Process::Sys.setgid(group.gid) if group
+      end
+      if config['user']
+        user = Etc.getpwnam(config['user'])
+        Process::Sys.setuid(user.uid) if user
+      end
 
       # configure rack
       app = Daemon.new(config['vpns'])

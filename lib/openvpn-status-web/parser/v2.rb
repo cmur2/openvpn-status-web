@@ -1,5 +1,5 @@
 
-require 'openvpn-status-web/parser/modern_stateless'
+require_relative 'modern_stateless'
 
 module OpenVPNStatusWeb
   module Parser
