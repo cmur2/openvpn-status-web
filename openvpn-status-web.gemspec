@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'better_errors'
   s.add_development_dependency 'binding_of_caller'
   s.add_development_dependency 'bundler'
-  s.add_development_dependency 'bundler-audit', '~> 0.6.0'
+  s.add_development_dependency 'bundler-audit', '~> 0.7.0'
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
