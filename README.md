@@ -59,8 +59,8 @@ If the information exposed is important to you serve it via the VPN or use a web
 
 ### Init scripts
 
-The [Debian 6 init.d script](init.d/debian-6-openvpn-status-web) assumes that openvpn-status-web is installed into the system ruby (no RVM support) and the config.yaml is at /opt/openvpn-status-web/config.yaml. Modify to your needs.
+The [Debian 6 init.d script](init.d/debian-6-openvpn-status-web) assumes that openvpn-status-web is installed into the system ruby (no RVM support) and the config.yaml is at `/opt/openvpn-status-web/config.yaml`. Modify to your needs.
 
 ## License
 
-openvpn-statsu-web is licensed under the Apache License, Version 2.0. See LICENSE for more information.
+openvpn-status-web is licensed under the Apache License, Version 2.0. See LICENSE for more information.
