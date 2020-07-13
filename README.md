@@ -57,9 +57,11 @@ For more information about OpenVPN status file and version, see their [man page]
 
 If the information exposed is important to you serve it via the VPN or use a webserver as a proxy to handle SSL and/or HTTP authentication.
 
-### Init scripts
+### Startup
 
-The [Debian 6 init.d script](init.d/debian-6-openvpn-status-web) assumes that openvpn-status-web is installed into the system ruby (no RVM support) and the config.yaml is at `/opt/openvpn-status-web/config.yaml`. Modify to your needs.
+There is a [Dockerfile](docs/Dockerfile) that can be used to build a Docker image for running openvpn-status-web.
+
+The [Debian 6 init script](docs/debian-init-openvpn-status-web) assumes that openvpn-status-web is installed into the system ruby (no RVM support) and the config.yaml is at `/opt/openvpn-status-web/config.yaml`. Modify to your needs.
 
 ## License
 
