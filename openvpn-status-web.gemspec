@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.executables = ['openvpn-status-web']
   s.extra_rdoc_files = Dir['README.md', 'LICENSE']
 
-  s.required_ruby_version = '>= 2.3'
+  s.required_ruby_version = '>= 2.5'
 
   s.add_runtime_dependency 'metriks'
   s.add_runtime_dependency 'rack', '~> 2.0'
@@ -36,6 +36,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rubocop', '~> 0.81.0'
+  s.add_development_dependency 'rubocop', '~> 0.82.0'
   s.add_development_dependency 'solargraph'
 end
