@@ -45,6 +45,9 @@ Naming/MethodParameterName:
 Naming/MemoizedInstanceVariableName:
   Enabled: false
 
+Style/AccessorGrouping:
+  Enabled: false
+
 Style/ConditionalAssignment:
   Enabled: false
 
