@@ -107,7 +107,7 @@ module OpenVPNStatusWeb
       if config['logfile']
         OpenVPNStatusWeb.logger = Logger.new(config['logfile'])
       else
-        OpenVPNStatusWeb.logger = Logger.new(STDOUT)
+        OpenVPNStatusWeb.logger = Logger.new($stdout)
       end
 
       OpenVPNStatusWeb.logger.progname = 'openvpn-status-web'
