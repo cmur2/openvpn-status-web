@@ -9,16 +9,18 @@ RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new
 Bundler::Audit::Task.new
 
-desc 'Should be run by developer once to prepare initial solargraph usage (fill caches etc.)'
-task :'solargraph:init' do
-  sh 'solargraph download-core'
-end
-
 desc 'Run experimental solargraph type checker'
-task :'solargraph:tc' do
+task :solargraph do
   sh 'solargraph typecheck'
 end
 
-task default: [:rubocop, :spec, 'bundle:audit']
+namespace :solargraph do
+  desc 'Should be run by developer once to prepare initial solargraph usage (fill caches etc.)'
+  task :init do
+    sh 'solargraph download-core'
+  end
+end
 
-task ci: [:default, :'solargraph:init', :'solargraph:tc']
+task default: [:rubocop, :spec, 'bundle:audit', :solargraph]
+
+task ci: ['solargraph:init', :default]
