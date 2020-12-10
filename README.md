@@ -1,6 +1,6 @@
 # openvpn-status-web
 
-[![Build Status](https://travis-ci.com/cmur2/openvpn-status-web.svg?branch=master)](https://travis-ci.com/cmur2/openvpn-status-web) ![ci](https://github.com/cmur2/openvpn-status-web/workflows/ci/badge.svg) [![Depfu](https://badges.depfu.com/badges/c264e2f70f2a19c43f880ddcb4a12ba8/overview.svg)](https://depfu.com/github/cmur2/openvpn-status-web?project_id=6194)
+![ci](https://github.com/cmur2/openvpn-status-web/workflows/ci/badge.svg) [![Depfu](https://badges.depfu.com/badges/c264e2f70f2a19c43f880ddcb4a12ba8/overview.svg)](https://depfu.com/github/cmur2/openvpn-status-web?project_id=6194)
 
 ## Description
 
