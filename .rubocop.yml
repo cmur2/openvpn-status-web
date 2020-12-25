@@ -1,5 +1,6 @@
 require:
 - rubocop-rake
+- rubocop-rspec
 
 AllCops:
   TargetRubyVersion: '2.5'
@@ -89,3 +90,13 @@ Style/Semicolon:
 
 Style/SymbolArray:
   Enabled: false
+
+RSpec/ExampleLength:
+  Max: 10
+
+RSpec/FilePath:
+  CustomTransform:
+    OpenVPNStatusWeb: openvpn-status-web
+
+RSpec/MultipleExpectations:
+  Max: 5

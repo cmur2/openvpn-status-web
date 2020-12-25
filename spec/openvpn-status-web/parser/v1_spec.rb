@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require_relative '../spec_helper'
+require_relative '../../spec_helper'
 
 describe OpenVPNStatusWeb::Parser::V1 do
   def status
     status_v1
   end
 
-  context 'for client list' do
+  context 'with client list' do
     it 'parses common names' do
       expect(status.client_list.map { |client| client[0] }).to eq(%w[foo bar])
     end
@@ -33,7 +33,7 @@ describe OpenVPNStatusWeb::Parser::V1 do
     end
   end
 
-  context 'for routing table' do
+  context 'with routing table' do
     it 'parses virtual addresses' do
       expect(status.routing_table.map { |route| route[0] }).to eq(['192.168.0.0/24', '192.168.66.2', '192.168.66.3', '2001:db8:0:0::1000'])
     end
