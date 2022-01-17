@@ -26,7 +26,9 @@ module OpenVPNStatusWeb
         end
 
         status = Status.new
+        status.client_list_headers = ['Common Name', 'Real Address', 'Data Received', 'Data Sent', 'Connected Since']
         status.client_list = client_list[2..-1].map { |client| parse_client(client) }
+        status.routing_table_headers = ['Virtual Address', 'Common Name', 'Real Address', 'Last Ref']
         status.routing_table = routing_table[1..-1].map { |route| parse_route(route) }
         status.global_stats = global_stats.map { |global| parse_global(global) }
         status

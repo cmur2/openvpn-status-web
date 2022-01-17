@@ -32,6 +32,10 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
             ]
           )
         end
+
+        it 'has the same number of headers' do
+          expect(status.client_list[0].length).to eq(status.client_list_headers.length)
+        end
       end
 
       context 'with routing table' do
@@ -54,6 +58,10 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
               DateTime.new(2012, 1, 1, 23, 42, 0), DateTime.new(2012, 1, 1, 23, 42, 0)
             ]
           )
+        end
+
+        it 'has the same number of headers' do
+          expect(status.routing_table[0].length).to eq(status.routing_table_headers.length)
         end
       end
 
