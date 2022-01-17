@@ -50,20 +50,36 @@ thead {
   <div>
   <table>
     <thead>
-      <td class="first">Common Name</td>
-      <td class="middle">Real Address</td>
-      <td class="middle">Data Received</td>
-      <td class="middle">Data Sent</td>
-      <td class="last">Connected Since</td>
+<% status.client_list_headers.each_with_index do |header,i| %>
+<% if i == 0 %>
+      <td class="first">
+<% elsif i == status.client_list_headers.length-1 %>
+      <td class="last">
+<% else %>
+      <td class="middle">
+<% end %>
+      <%= header %></td>
+<% end %>
     </thead>
     <tbody>
 <% status.client_list.each do |client| %>
       <tr>
-        <td class="first"><%= client[0] %></td>
-        <td class="middle"><%= client[1] %></td>
-        <td class="middle"><%= client[2].to_i.as_bytes %></td>
-        <td class="middle"><%= client[3].to_i.as_bytes %></td>
-        <td class="last"><%= client[4].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
+<% status.client_list_headers.each_with_index do |header,i| %>
+<% if i == 0 %>
+        <td class="first">
+<% elsif i == status.client_list_headers.length-1 %>
+        <td class="last">
+<% else %>
+        <td class="middle">
+<% end %>
+<% if header =~ /(Received|Sent)/ %>
+        <%= client[i].to_i.as_bytes %></td>
+<% elsif client[i].is_a? DateTime %>
+        <%= client[i].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
+<% else %>
+        <%= client[i] %></td>
+<% end %>
+<% end %>
       </tr>
 <% end %>
     </tbody>
@@ -74,18 +90,34 @@ thead {
   <div>
   <table>
     <thead>
-      <td class="first">Virtual Address</td>
-      <td class="middle">Common Name</td>
-      <td class="middle">Real Address</td>
-      <td class="last">Last Ref</td>
+<% status.routing_table_headers.each_with_index do |header,i| %>
+<% if i == 0 %>
+      <td class="first">
+<% elsif i == status.routing_table_headers.length-1 %>
+      <td class="last">
+<% else %>
+      <td class="middle">
+<% end %>
+      <%= header %></td>
+<% end %>
     </thead>
     <tbody>
 <% status.routing_table.each do |route| %>
       <tr>
-        <td class="first"><%= route[0] %></td>
-        <td class="middle"><%= route[1] %></td>
-        <td class="middle"><%= route[2] %></td>
-        <td class="last"><%= route[3].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
+<% status.routing_table_headers.each_with_index do |header,i| %>
+<% if i == 0 %>
+        <td class="first">
+<% elsif i == status.routing_table_headers.length-1 %>
+        <td class="last">
+<% else %>
+        <td class="middle">
+<% end %>
+<% if route[i].is_a? DateTime %>
+        <%= route[i].strftime('%-d.%-m.%Y %H:%M:%S') %></td>
+<% else %>
+        <%= route[i] %></td>
+<% end %>
+<% end %>
       </tr>
 <% end %>
     </tbody>

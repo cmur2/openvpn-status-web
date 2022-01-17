@@ -11,7 +11,9 @@ module OpenVPNStatusWeb
 
         text.lines.each do |line|
           parts = line.strip.split(sep)
+          status.client_list_headers = ['Common Name', 'Real Address', 'Data Received', 'Data Sent', 'Connected Since']
           status.client_list << parse_client(parts[1..5]) if parts[0] == 'CLIENT_LIST'
+          status.routing_table_headers = ['Virtual Address', 'Common Name', 'Real Address', 'Last Ref']
           status.routing_table << parse_route(parts[1..4]) if parts[0] == 'ROUTING_TABLE'
           status.global_stats << parse_global(parts[1..2]) if parts[0] == 'GLOBAL_STATS'
         end
