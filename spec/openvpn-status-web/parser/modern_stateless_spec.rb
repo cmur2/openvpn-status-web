@@ -17,24 +17,29 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
           expect(status.client_list.map { |client| client[1] }).to eq(['1.2.3.4:1234', '1.2.3.5:1235'])
         end
 
+        it 'parses virtual addresses' do
+          expect(status.client_list.map { |client| client[2] }).to eq(['192.168.66.2', '2001:db8:0:0::1000'])
+        end
+
         it 'parses received bytes' do
-          expect(status.client_list.map { |client| client[2] }).to eq([11_811_160_064, 512])
+          expect(status.client_list.map { |client| client[3] }).to eq([11_811_160_064, 512])
         end
 
         it 'parses sent bytes' do
-          expect(status.client_list.map { |client| client[3] }).to eq([4_194_304, 2048])
+          expect(status.client_list.map { |client| client[4] }).to eq([4_194_304, 2048])
         end
 
         it 'parses connected since date' do
-          expect(status.client_list.map { |client| client[4] }).to eq(
+          expect(status.client_list.map { |client| client[5] }).to eq(
             [
-              DateTime.new(2012, 1, 1, 23, 42, 0), DateTime.new(2012, 1, 1, 23, 42, 0)
+              DateTime.new(2012, 1, 1, 23, 42, 0),
+              DateTime.new(2012, 1, 1, 23, 42, 0)
             ]
           )
         end
 
         it 'has the same number of headers' do
-          expect(status.client_list[0].length).to eq(status.client_list_headers.length)
+          expect(status.client_list[0].size).to eq(status.client_list_headers.size)
         end
       end
 
@@ -61,7 +66,7 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
         end
 
         it 'has the same number of headers' do
-          expect(status.routing_table[0].length).to eq(status.routing_table_headers.length)
+          expect(status.routing_table[0].size).to eq(status.routing_table_headers.size)
         end
       end
 
