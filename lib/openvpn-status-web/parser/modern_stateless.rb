@@ -11,31 +11,40 @@ module OpenVPNStatusWeb
 
         text.lines.each do |line|
           parts = line.strip.split(sep)
-          status.client_list_headers = ['Common Name', 'Real Address', 'Data Received', 'Data Sent', 'Connected Since']
-          status.client_list << parse_client(parts[1..5]) if parts[0] == 'CLIENT_LIST'
-          status.routing_table_headers = ['Virtual Address', 'Common Name', 'Real Address', 'Last Ref']
-          status.routing_table << parse_route(parts[1..4]) if parts[0] == 'ROUTING_TABLE'
+          status.client_list_headers = parts[2..-1] if parts[0] == 'HEADER' && parts[1] == 'CLIENT_LIST'
+          status.client_list << parse_client(parts[1..-1], status.client_list_headers) if parts[0] == 'CLIENT_LIST'
+          status.routing_table_headers = parts[2..-1] if parts[0] == 'HEADER' && parts[1] == 'ROUTING_TABLE'
+          status.routing_table << parse_route(parts[1..-1], status.routing_table_headers) if parts[0] == 'ROUTING_TABLE'
           status.global_stats << parse_global(parts[1..2]) if parts[0] == 'GLOBAL_STATS'
         end
 
         status
       end
 
-      private_class_method def self.parse_client(client)
-        client[2] = client[2].to_i
-        client[3] = client[3].to_i
-        client[4] = DateTime.strptime(client[4], '%a %b %d %k:%M:%S %Y')
+      private_class_method def self.parse_client(client, headers)
+        headers.each_with_index do |header, i|
+          client[i] = parse_date(client[i]) if header.end_with?('Since')
+          client[i] = client[i].to_i if header.start_with?('Bytes')
+        end
+
         client
       end
 
-      private_class_method def self.parse_route(route)
-        route[3] = DateTime.strptime(route[3], '%a %b %d %k:%M:%S %Y')
+      private_class_method def self.parse_route(route, headers)
+        headers.each_with_index do |header, i|
+          route[i] = parse_date(route[i]) if header.end_with?('Last Ref')
+        end
+
         route
       end
 
       private_class_method def self.parse_global(global)
         global[1] = global[1].to_i
         global
+      end
+
+      private_class_method def self.parse_date(date_string)
+        DateTime.strptime(date_string, '%a %b %d %k:%M:%S %Y')
       end
     end
   end
