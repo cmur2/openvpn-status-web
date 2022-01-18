@@ -5,7 +5,9 @@ module OpenVPNStatusWeb
     class ModernStateless
       def self.parse_status_log(text, sep)
         status = Status.new
+        status.client_list_headers = []
         status.client_list = []
+        status.routing_table_headers = []
         status.routing_table = []
         status.global_stats = []
 
