@@ -76,4 +76,8 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
       end
     end
   end
+
+  it 'parses status-version 2 of OpenVPN 2.5' do
+    expect(status_2_5_v2).not_to be_nil
+  end
 end

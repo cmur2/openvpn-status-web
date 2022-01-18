@@ -45,6 +45,8 @@ module OpenVPNStatusWeb
 
       private_class_method def self.parse_date(date_string)
         DateTime.strptime(date_string, '%a %b %d %k:%M:%S %Y')
+      rescue Date::Error
+        DateTime.strptime(date_string, '%Y-%m-%d %k:%M:%S')
       end
     end
   end
