@@ -9,7 +9,7 @@ require 'yaml'
 require 'rack'
 require 'erb'
 require 'metriks'
-require 'better_errors' if ENV['RACK_ENV'] == 'development'
+require 'better_errors' if ENV.fetch('RACK_ENV', nil) == 'development'
 
 require 'openvpn-status-web/status'
 require 'openvpn-status-web/parser/v1'
@@ -128,7 +128,7 @@ module OpenVPNStatusWeb
 
       # configure rack
       app = Daemon.new(config['vpns'])
-      if ENV['RACK_ENV'] == 'development'
+      if ENV.fetch('RACK_ENV', nil) == 'development'
         app = BetterErrors::Middleware.new(app)
         BetterErrors.application_root = File.expand_path(__dir__)
       end
