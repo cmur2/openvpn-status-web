@@ -13,10 +13,10 @@ module OpenVPNStatusWeb
 
         text.lines.each do |line|
           parts = line.strip.split(sep)
-          status.client_list_headers = parts[2..-1] if parts[0] == 'HEADER' && parts[1] == 'CLIENT_LIST'
-          status.client_list << parse_client(parts[1..-1], status.client_list_headers) if parts[0] == 'CLIENT_LIST'
-          status.routing_table_headers = parts[2..-1] if parts[0] == 'HEADER' && parts[1] == 'ROUTING_TABLE'
-          status.routing_table << parse_route(parts[1..-1], status.routing_table_headers) if parts[0] == 'ROUTING_TABLE'
+          status.client_list_headers = parts[2..] if parts[0] == 'HEADER' && parts[1] == 'CLIENT_LIST'
+          status.client_list << parse_client(parts[1..], status.client_list_headers) if parts[0] == 'CLIENT_LIST'
+          status.routing_table_headers = parts[2..] if parts[0] == 'HEADER' && parts[1] == 'ROUTING_TABLE'
+          status.routing_table << parse_route(parts[1..], status.routing_table_headers) if parts[0] == 'ROUTING_TABLE'
           status.global_stats << parse_global(parts[1..2]) if parts[0] == 'GLOBAL_STATS'
         end
 
