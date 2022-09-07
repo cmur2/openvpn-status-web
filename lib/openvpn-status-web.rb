@@ -7,6 +7,7 @@ require 'logger'
 require 'ipaddr'
 require 'yaml'
 require 'rack'
+require 'rackup'
 require 'erb'
 require 'metriks'
 require 'better_errors' if ENV.fetch('RACK_ENV', nil) == 'development'
@@ -135,14 +136,14 @@ module OpenVPNStatusWeb
 
       Signal.trap('INT') do
         OpenVPNStatusWeb.logger.info 'Quitting...'
-        Rack::Handler::WEBrick.shutdown
+        Rackup::Handler::WEBrick.shutdown
       end
       Signal.trap('TERM') do
         OpenVPNStatusWeb.logger.info 'Quitting...'
-        Rack::Handler::WEBrick.shutdown
+        Rackup::Handler::WEBrick.shutdown
       end
 
-      Rack::Handler::WEBrick.run app, Host: config['host'], Port: config['port']
+      Rackup::Handler::WEBrick.run app, Host: config['host'], Port: config['port']
     end
   end
 end
