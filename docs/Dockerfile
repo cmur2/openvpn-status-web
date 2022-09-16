@@ -1,8 +1,8 @@
-FROM alpine:3.13
+FROM alpine:3.16
 
 EXPOSE 8080
 
-ENV VERSION=3.2.1
+ENV VERSION=3.3.0
 
 RUN apk --no-cache add openssl ca-certificates && \
     apk --no-cache add ruby ruby-etc ruby-webrick && \
