@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'metriks'
   s.add_runtime_dependency 'rack', '~> 3.0'
-  s.add_runtime_dependency 'rackup'
+  s.add_runtime_dependency 'rackup', '~> 2'
   s.add_runtime_dependency 'webrick', '>= 1.6.1'
 
   s.add_development_dependency 'better_errors'
