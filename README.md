@@ -61,7 +61,31 @@ If the information exposed is important to you serve it via the VPN or use a web
 
 There is a [Dockerfile](docs/Dockerfile) that can be used to build a Docker image for running openvpn-status-web.
 
-The [Debian 6 init script](docs/debian-init-openvpn-status-web) assumes that openvpn-status-web is installed into the system ruby (no RVM support) and the config.yaml is at `/opt/openvpn-status-web/config.yaml`. Modify to your needs.
+This can for example be used with `docker-compose` via:
+
+```yaml
+version: "2.4"
+services:
+  openvpn-status-web:
+    image: your-selfbuilt-docker-image
+    user: root  # needed since the default status files are chmod 600
+    volumes:
+    - /path/to/host/config.yml:/etc/openvpn-status-web/config.yml:ro
+    - /run/openvpn-server:/run/openvpn-server
+    ports:
+    - "8080:8080"
+```
+
+The `/path/to/host/config.yml` could be:
+
+```yaml
+host: "0.0.0.0"
+port: "8080"
+vpns:
+  my-cool-vpn:  # the following depends on your setup
+    version: 2
+    status_file: "/run/openvpn-server/status-my-cool-vpn.log"
+```
 
 ## License
 
