@@ -7,7 +7,7 @@ describe OpenVPNStatusWeb::Parser::ModernStateless do
     2 => status_v2,
     3 => status_v3
   }.each do |version, status|
-    context "for status-version #{version}" do
+    context "when status-version #{version}" do
       context 'with client list' do
         it 'parses common names' do
           expect(status.client_list.map { |client| client[0] }).to eq(%w[foo bar])
