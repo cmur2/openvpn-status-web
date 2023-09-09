@@ -100,7 +100,7 @@ Style/SymbolArray:
 RSpec/ExampleLength:
   Max: 10
 
-RSpec/FilePath:
+RSpec/SpecFilePathFormat:
   CustomTransform:
     OpenVPNStatusWeb: openvpn-status-web
 
