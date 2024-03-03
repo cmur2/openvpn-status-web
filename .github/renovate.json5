@@ -1,0 +1,41 @@
+{
+  extends: [
+    "config:base",
+    ":dependencyDashboard",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimitNone",
+    ":label(dependency-upgrade)",
+  ],
+  schedule: ["before 8am on thursday"],
+  branchPrefix: "renovate-",
+  dependencyDashboardHeader: "View repository job log [here](https://app.renovatebot.com/dashboard#github/cmur2/dyndnsd).",
+  separateMinorPatch: true,
+  commitMessagePrefix: "project: ",
+  commitMessageAction: "update",
+  commitMessageTopic: "{{depName}}",
+  commitMessageExtra: "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
+  packageRules: [
+    // Ruby dependencies are managed by depfu
+    {
+      matchManagers: ["bundler"],
+      enabled: false,
+    },
+    // Commit message formats
+    {
+      matchDatasources: ["docker"],
+      commitMessagePrefix: "docker: ",
+    },
+    {
+      matchManagers: ["github-actions"],
+      commitMessagePrefix: "ci: ",
+    },
+  ],
+  regexManagers: [
+    {
+      fileMatch: ["\.rb$", "^Rakefile$"],
+      matchStrings: [
+        "renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)\\s.*_version = '(?<currentValue>.*)'\\s"
+      ]
+    },
+  ],
+}
