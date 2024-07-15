@@ -26,10 +26,10 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.0'
 
-  s.add_runtime_dependency 'metriks'
-  s.add_runtime_dependency 'rack', '~> 3.0'
-  s.add_runtime_dependency 'rackup', '~> 2'
-  s.add_runtime_dependency 'webrick', '>= 1.6.1'
+  s.add_dependency 'metriks'
+  s.add_dependency 'rack', '~> 3.0'
+  s.add_dependency 'rackup', '~> 2'
+  s.add_dependency 'webrick', '>= 1.6.1'
 
   s.add_development_dependency 'better_errors'
   s.add_development_dependency 'binding_of_caller'
@@ -38,7 +38,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rack-test'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'rubocop', '~> 1.64.0'
+  s.add_development_dependency 'rubocop', '~> 1.65.0'
   s.add_development_dependency 'rubocop-rake', '~> 0.6.0'
   s.add_development_dependency 'rubocop-rspec', '~> 3.0.1'
   s.add_development_dependency 'solargraph', '~> 0.50.0'
