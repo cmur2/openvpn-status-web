@@ -40,6 +40,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'rubocop', '~> 1.71.0'
   s.add_development_dependency 'rubocop-rake', '~> 0.6.0'
-  s.add_development_dependency 'rubocop-rspec', '~> 3.3.0'
+  s.add_development_dependency 'rubocop-rspec', '~> 3.4.0'
   s.add_development_dependency 'solargraph', '~> 0.50.0'
 end
