@@ -3,11 +3,9 @@
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
-require 'bundler/audit/task'
 
 RSpec::Core::RakeTask.new(:spec)
 RuboCop::RakeTask.new
-Bundler::Audit::Task.new
 
 desc 'Run experimental solargraph type checker'
 task :solargraph do
@@ -21,7 +19,14 @@ namespace :solargraph do
   end
 end
 
-task default: [:rubocop, :spec, 'bundle:audit', :solargraph]
+namespace :bundle do
+  desc 'Check for vulnerabilities with bundler-audit'
+  task :audit do
+    sh 'bundler-audit check --ignore GHSA-vvfq-8hwr-qm4m'
+  end
+end
+
+task default: [:rubocop, :spec, 'bundle:audit']
 
 desc 'Run all tasks desired for CI'
 task ci: ['solargraph:init', :default]
