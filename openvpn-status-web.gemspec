@@ -26,7 +26,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 3.0'
 
-  s.add_dependency 'metriks'
   s.add_dependency 'rack', '~> 3.0'
   s.add_dependency 'rackup', '~> 2'
   s.add_dependency 'webrick', '>= 1.6.1'

@@ -9,7 +9,6 @@ require 'yaml'
 require 'rack'
 require 'rackup'
 require 'erb'
-require 'metriks'
 require 'better_errors' if ENV.fetch('RACK_ENV', nil) == 'development'
 
 require 'openvpn-status-web/status'
